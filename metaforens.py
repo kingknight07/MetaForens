@@ -14,17 +14,17 @@ import os
 from forensics.metadata_extractor import extract_metadata
 from forensics.ela import perform_ela
 from forensics.frequency_analysis import analyze_frequency
-from forensics.noise_analysis import analyze_noise
-from forensics.jpeg_analysis import analyze_jpeg
+from forensics.noise_analysis import extract_noise_map
+from forensics.jpeg_analysis import analyze_jpeg_artifacts
 from forensics.chromatic_analysis import analyze_chromatic_aberration
 from forensics.color_analysis import analyze_color_distribution
 from forensics.texture_analysis import analyze_texture_consistency
 from forensics.gan_detection import detect_gan_fingerprint
-from forensics.noise_inconsistency import detect_noise_inconsistency
-from forensics.benford_analysis import analyze_benford
+from forensics.noise_inconsistency import analyze_noise_inconsistency
+from forensics.benford_analysis import benford_law_analysis
 from forensics.cfa_detection import detect_cfa_pattern
-from forensics.double_jpeg import detect_double_jpeg
-from forensics.gradient_analysis import analyze_gradients
+from forensics.double_jpeg import detect_double_jpeg_compression
+from forensics.gradient_analysis import analyze_gradient_anomalies
 from forensics.classifier import classify_image
 
 
@@ -86,7 +86,7 @@ class MetaForens:
         
         # 2. JPEG analysis
         print("  [2/11] Analyzing JPEG artifacts...")
-        jpeg_analysis = analyze_jpeg(image_path)
+        jpeg_analysis = analyze_jpeg_artifacts(image_path)
         
         # 3. Chromatic aberration
         print("  [3/11] Checking chromatic aberration...")
@@ -106,11 +106,11 @@ class MetaForens:
         
         # 7. Noise inconsistency
         print("  [7/11] Analyzing noise patterns...")
-        noise_inconsistency = detect_noise_inconsistency(image_path)
+        noise_inconsistency = analyze_noise_inconsistency(image_path)
         
         # 8. Benford's Law analysis
         print("  [8/11] Running Benford's Law test...")
-        benford_analysis = analyze_benford(image_path)
+        benford_analysis = benford_law_analysis(image_path)
         
         # 9. CFA pattern detection
         print("  [9/11] Detecting camera sensor patterns...")
@@ -118,11 +118,11 @@ class MetaForens:
         
         # 10. Double JPEG compression
         print(" [10/11] Checking for double compression...")
-        double_jpeg = detect_double_jpeg(image_path)
+        double_jpeg = detect_double_jpeg_compression(image_path)
         
         # 11. Gradient analysis
         print(" [11/11] Analyzing image gradients...")
-        gradient_analysis = analyze_gradients(image_path)
+        gradient_analysis = analyze_gradient_anomalies(image_path)
         
         # Classify the image
         print("  Classifying image...")
