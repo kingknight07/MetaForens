@@ -12,23 +12,41 @@ print("="*60)
 
 !pip install -q kaggle pillow numpy pandas matplotlib seaborn tqdm opencv-python scikit-image scipy scikit-learn
 
-print("\nCloning MetaForens repository...")
-!rm -rf /content/MetaForens  # Clean any existing clone
-!git clone https://github.com/kingknight07/MetaForens.git
-
 import os
 import sys
 
+# Ensure we're in /content directory
+os.chdir('/content')
+
+print("\nCloning MetaForens repository...")
+# Clean any existing clone
+!rm -rf MetaForens
+!git clone https://github.com/kingknight07/MetaForens.git
+
+# Verify clone succeeded
+if not os.path.exists('/content/MetaForens'):
+    print("❌ Clone failed! Trying alternative method...")
+    !git clone --depth 1 https://github.com/kingknight07/MetaForens.git
+    
+if not os.path.exists('/content/MetaForens'):
+    raise Exception("Failed to clone repository. Please check your internet connection.")
+
 # Change to repository directory
 os.chdir('/content/MetaForens')
+print(f"✓ Working directory: {os.getcwd()}")
+
+# List files to verify structure
+print("\n📂 Repository structure:")
+!ls -la
 
 # Add to Python path to ensure proper imports
 sys.path.insert(0, '/content/MetaForens')
 
-print("Installing MetaForens requirements...")
+print("\nInstalling MetaForens requirements...")
 !pip install -q -r requirements.txt
 
 # Install in development mode
+print("Installing MetaForens library...")
 !pip install -q -e .
 
 # Verify the fix is present
