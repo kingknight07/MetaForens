@@ -38,7 +38,7 @@ try:
     detector = MetaForens()
     print(f"\n✅ SUCCESS!")
     print(f"   Version: {detector.version}")
-    print(f"   Analyses: {detector.analyses_count}")
+    print(f"   Forensic Analyses: {detector.analyses_count}")
     print(f"\n🎉 MetaForens is ready to use!")
 except Exception as e:
     print(f"\n❌ ERROR: {e}")
