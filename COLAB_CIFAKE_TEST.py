@@ -13,14 +13,27 @@ print("="*60)
 !pip install -q kaggle pillow numpy pandas matplotlib seaborn tqdm opencv-python scikit-image scipy scikit-learn
 
 print("\nCloning MetaForens repository...")
+!rm -rf /content/MetaForens  # Clean any existing clone
 !git clone https://github.com/kingknight07/MetaForens.git
 
 import os
+import sys
+
+# Change to repository directory
 os.chdir('/content/MetaForens')
+
+# Add to Python path to ensure proper imports
+sys.path.insert(0, '/content/MetaForens')
 
 print("Installing MetaForens requirements...")
 !pip install -q -r requirements.txt
+
+# Install in development mode
 !pip install -q -e .
+
+# Verify the fix is present
+print("\n🔍 Verifying import fix...")
+!grep "from forensics.noise_inconsistency" metaforens.py
 
 print("\n✅ Installation complete!\n")
 
