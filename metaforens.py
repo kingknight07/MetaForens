@@ -43,6 +43,7 @@ class MetaForens:
     def __init__(self):
         """Initialize the MetaForens detector."""
         self.version = "1.0.0"
+        self.analyses_count = 15  # Number of forensic analyses performed
     
     def analyze(self, image_path, return_detailed=False):
         """
